@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaeaea;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 140vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+         .username-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px; /* Add margin below username */
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+        }
+        .message-list {
+            margin: 20px 0;
+            padding: 0;
+            list-style-type: none;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column-reverse; /* Change this line to reverse the order */
+        }
+        .message-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            max-width: 75%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .message-item.sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+        }
+        .message-item.received {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            align-self: flex-start;
+        }
+        .message-time {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+            align-self: flex-end;
+        }
+        .message-form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        .message-form input[type="text"],
+        .message-form input[type="submit"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+        }
+        .message-form input[type="submit"] {
+            background-color: #28a745;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+        }
+        .message-form input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Messages</h1>
+        <div class="username-container">
+            <img src="{% if contact_user %}{{ contact_user.avatar.url }}{% else %}default_avatar_url_here{% endif %}" alt="Avatar" class="avatar">
+            <h2 style="text-align:center">{% if contact_user %}{{ contact_user.username }}{% else %}All Users{% endif %}</h2>
+        </div>
+        <h3>Sent Messages</h3>
+        <ul class="message-list">
+            {% for message in sent_messages %}
+                <li class="message-item sent">
+                    <p>{{ message.content }}</p>
+                    <span class="message-time">{{ message.sent_time }} To {{ message.sender.username }}</span>
+                </li>
+            {% empty %}
+                <p>No sent messages.</p>
+            {% endfor %}
+        </ul>
+        <ul class="message-list">
+            {% for message in received_messages %}
+                <li class="message-item received">
+                    <p>{{ message.content }}</p>
+                    <span class="message-time">{{ message.sent_time }} From {{ message.receiver.username }}</span>
+                </li>
+            {% empty %}
+                <p>No received messages.</p>
+            {% endfor %}
+        </ul>
+
+        {% if contact_user %}
+            <form method="post" action="{% url 'conversation:send-message' contact_user.id %}" class="message-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Send Message">
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>
