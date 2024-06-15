@@ -10,6 +10,8 @@ class ProfileView(View):
     def get(self, request):
         user = request.user
         return render(request, 'profile.html', context={'user': user})
+
+
 class ProfileUpdateView(View):
     def get(self, request):
         u = ProfileUpdateForm(instance=request.user)

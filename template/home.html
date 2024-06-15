@@ -17,6 +17,12 @@
             text-align: center;
             color: #333;
         }
+        hr {
+            width: 80%;
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
         .user-list {
             width: 300px;
             margin: 20px auto;
@@ -77,18 +83,50 @@
             background-color: #0056b3;
             transform: scale(1.1); /* Scale up the button slightly on hover */
         }
+        .current-user-info {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .current-user-info img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .current-user-info .username {
+            font-size: 16px;
+            font-weight: bold;
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
-    <h1>Users</h1>
+    <h1>My Profile</h1>
+    <div class="current-user-info">
+        {% if request.user.image %}
+            <img src="{{ request.user.image.url }}" alt="{{ request.user.username }}">
+        {% else %}
+            <img src="/media/media/images/trol.jpeg" alt="{{ request.user.username }}">
+        {% endif %}
+        <div class="username">{{ request.user.username }}</div>
+    </div>
+
     <a href="{% url 'user:profile' %}" class="profile-button">Profile</a>
+    <hr>
+    <h1>Users</h1>
     <ul class="user-list">
         {% for user in users %}
             {% if request.user.username != user.username %}
                 <li>
                     <a class="user-item" href="{% url 'conversation:message-with-user' user.id %}">
                         <div class="user-image">
-                            {% if user.image %}
+                            {% if user.video %}
+                                <video width="40" height="40" controls>
+                                    <source src="{{ user.video.url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            {% elif user.image %}
                                 <img src="{{ user.image.url }}" alt="{{ user.username }}">
                             {% else %}
                                 <img src="/media/media/images/trol.jpeg" alt="{{ user.username }}">

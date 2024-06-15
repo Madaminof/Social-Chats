@@ -6,6 +6,8 @@ from django.db import models
 
 class User(AbstractUser):
     image = models.ImageField(upload_to='media/images/',blank=True,null=True)
+    video = models.FileField(upload_to='videos/', null=True, blank=True)
+
 
 
     class Meta:

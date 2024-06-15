@@ -16,7 +16,7 @@ class UserForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['image', 'username', 'first_name', 'last_name', 'email']
+        fields = ['image','video', 'username', 'first_name', 'last_name', 'email']
 
     def save(self, commit=True):
         user = super(ProfileUpdateForm, self).save(commit=False)
