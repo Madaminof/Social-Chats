@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .button-container {
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #405DE6;
+            border-radius: 5px;
+            border: 1px solid #405DE6;
+            font-size: 18px;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #6E82EE;
+            border-color: #6E82EE;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <h1>Register / Login</h1>
+        <a href="{% url 'user:register' %}" class="button">Register</a>
+        <a href="{% url 'user:login' %}" class="button">Login</a>
+    </div>
+</body>
+</html>

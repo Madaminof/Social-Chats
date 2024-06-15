@@ -1,12 +1,27 @@
 from django.contrib.auth import logout, login
 from django.shortcuts import render, redirect
 from django.views import View
-from user.forms import UserForm
+from user.forms import UserForm,ProfileUpdateForm
 from user.models import User
 from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
+class ProfileView(View):
+    def get(self, request):
+        user = request.user
+        return render(request, 'profile.html', context={'user': user})
+class ProfileUpdateView(View):
+    def get(self, request):
+        u = ProfileUpdateForm(instance=request.user)
+        return render(request, 'profile_update.html', context={'u': u})
 
+    def post(self, request):
+        u = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
+        if u.is_valid():
+            u.save()
+            return redirect('user:profile')
+        else:
+            return render(request, 'profile_update.html', context={'u': u})
 
 class RegisterView(View):
     def get(self, request):
@@ -54,3 +69,7 @@ class LogoutView(View):
         logout(request)
         return redirect('user:login')
 
+
+class RegisterLoginPage(View):
+    def get(self, request):
+        return render(request, 'page.html')

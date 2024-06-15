@@ -101,6 +101,22 @@
                 padding: 12px;
             }
         }
+         .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s;
+            align-self: flex-start;
+            display: inline-block; /* Ensures the button respects padding and margins */
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -110,6 +126,8 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Submit</button>
+    <a href="{% url 'user:page' %}" class="back-button">Back</a>
+
 </form>
 
 </body>

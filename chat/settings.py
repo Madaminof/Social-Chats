@@ -131,13 +131,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import os
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 STATIC_ROOT = 'static'
 
 AUTH_USER_MODEL = 'user.User'
+
+
+STATIC_ROOT = 'static'
 
 # settings.py
 
