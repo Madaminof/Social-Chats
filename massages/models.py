@@ -6,3 +6,6 @@ class Messages(models.Model):
     receiver = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE)
     content = models.TextField()
     sent_time = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='media/images/', blank=True, null=True)
+    file = models.FileField(upload_to='media/files', blank=True, null=True)
+

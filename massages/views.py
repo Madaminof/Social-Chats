@@ -29,6 +29,7 @@ class MessagesListView(LoginRequiredMixin, View):
         }
         return render(request, 'massage.html', context=context)
 
+
 class SendMessage(LoginRequiredMixin, View):
     login_url = '/login/'  # URL to redirect to for login
 
@@ -37,7 +38,7 @@ class SendMessage(LoginRequiredMixin, View):
             return redirect(self.login_url)  # Redirect to login page
 
         contact_user = User.objects.get(id=user_id)
-        form = MessageForm(request.POST)
+        form = MessageForm(request.POST, request.FILES)  # Add request.FILES to handle file uploads
         if form.is_valid():
             message = form.save(commit=False)
             message.sender = request.user

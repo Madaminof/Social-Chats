@@ -135,6 +135,20 @@
         .user-name {
             font-size: 18px;
             color: #333;
+            margin-right: 10px;
+        }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 5px;
+        }
+        .status-dot.online {
+            background-color: #28a745;
+        }
+        .status-dot.offline {
+            background-color: #dc3545;
         }
         .back-button {
             margin-top: 20px;
@@ -196,28 +210,38 @@
             font-size: 18px;
             color: #333;
         }
+        .message-item img {
+            max-width: 150px; /* Adjust the size as needed */
+            max-height: 150px; /* Adjust the size as needed */
+            border-radius: 5px; /* Optional: To make the image corners rounded */
+            margin-top: 10px; /* Optional: To add space between the text and image */
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Messages</h1>
 
-          <a class="user-item" href="{% url 'conversation:message-with-user' user.id %}">
-                        <div class="user-image">
-                            {% if contact_user.image %}
-                                <img src="{{ contact_user.image.url }}" alt="{{ contact_user.username }}">
-                            {% else %}
-                                <img src="/media/media/images/trol.jpeg" alt="{{ contact_user.username }}">
-                            {% endif %}
-                        </div>
-                        <div class="user-name">{{ contact_user.username }}</div>
-          </a>
+        <a class="user-item" href="{% url 'conversation:message-with-user' contact_user.id %}">
+            <div class="user-image">
+                {% if contact_user.image %}
+                    <img src="{{ contact_user.image.url }}" alt="{{ contact_user.username }}">
+                {% else %}
+                    <img src="/media/media/images/trol.jpeg" alt="{{ contact_user.username }}">
+                {% endif %}
+            </div>
+            <div class="user-name">{{ contact_user.username }}</div>
+            <span class="status-dot {% if contact_user.is_online %}online{% else %}offline{% endif %}"></span>
+        </a>
 
         <h3>Sent Messages</h3>
         <ul class="message-list">
             {% for message in sent_messages %}
                 <li class="message-item sent">
                     <p>{{ message.content }}</p>
+                    {% if message.image %}
+                        <img src="{{ message.image.url }}" alt="Message Image">
+                    {% endif %}
                     <span class="message-time">{{ message.sent_time }} To {{ message.receiver.username }}</span>
                 </li>
             {% empty %}
@@ -229,6 +253,9 @@
             {% for message in received_messages %}
                 <li class="message-item received">
                     <p>{{ message.content }}</p>
+                    {% if message.image %}
+                        <img src="{{ message.image.url }}" alt="Message Image">
+                    {% endif %}
                     <span class="message-time">{{ message.sent_time }} From {{ message.sender.username }}</span>
                 </li>
             {% empty %}
@@ -236,7 +263,7 @@
             {% endfor %}
         </ul>
         {% if contact_user %}
-            <form method="post" action="{% url 'conversation:send-message' contact_user.id %}" class="message-form">
+            <form method="post" action="{% url 'conversation:send-message' contact_user.id %}" enctype="multipart/form-data" class="message-form">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input type="submit" value="Send Message">

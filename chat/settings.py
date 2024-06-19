@@ -53,6 +53,8 @@ MIDDLEWARE = [
 
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
+    'user.middleware.UpdateOnlineStatusMiddleware',
+
 ]
 
 ROOT_URLCONF = 'chat.urls'
