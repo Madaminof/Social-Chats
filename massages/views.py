@@ -56,10 +56,12 @@ class SendMessage(LoginRequiredMixin, View):
             }
             return render(request, 'massage.html', context=context)
 
+
+
 class HomeView(View):
     def get(self, request):
         users = User.objects.all()
         context = {
-            'users': users
+            'users': users,
         }
         return render(request, 'home.html', context=context)

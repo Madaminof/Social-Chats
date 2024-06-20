@@ -81,6 +81,12 @@
             {% else %}
                 <img src="/media/media/Unknown.jpeg" alt="" class="profile-image">
             {% endif %}
+            {% if user.video %}
+                    <video width="110" height="105" controls style="border-radius:50px;">
+                        <source src="{{ user.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+            {% endif %}
             <p><strong>Username:</strong> {{ user.username }}</p>
             <p><strong>First Name:</strong> {{ user.first_name }}</p>
             <p><strong>Last Name:</strong> {{ user.last_name }}</p>

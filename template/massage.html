@@ -137,18 +137,16 @@
             color: #333;
             margin-right: 10px;
         }
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-left: 5px;
+        .status-text {
+            font-size: 14px;
+            margin-left: 10px;
+            color: #333;
         }
-        .status-dot.online {
-            background-color: #28a745;
+        .status-text.online {
+            color: #28a745;
         }
-        .status-dot.offline {
-            background-color: #dc3545;
+        .status-text.offline {
+            color: #dc3545;
         }
         .back-button {
             margin-top: 20px;
@@ -166,7 +164,7 @@
         .back-button:hover {
             background-color: #0056b3;
         }
-         .user-list {
+        .user-list {
             width: 300px;
             margin: 20px auto;
             padding: 0;
@@ -224,6 +222,7 @@
 
         <a class="user-item" href="{% url 'conversation:message-with-user' contact_user.id %}">
             <div class="user-image">
+
                 {% if contact_user.image %}
                     <img src="{{ contact_user.image.url }}" alt="{{ contact_user.username }}">
                 {% else %}
@@ -231,7 +230,10 @@
                 {% endif %}
             </div>
             <div class="user-name">{{ contact_user.username }}</div>
-            <span class="status-dot {% if contact_user.is_online %}online{% else %}offline{% endif %}"></span>
+
+            <span class="status-text {% if contact_user.is_online %}online{% else %}offline{% endif %}">
+                {% if contact_user.is_online %}Online{% else %}Offline{% endif %}
+            </span>
         </a>
 
         <h3>Sent Messages</h3>

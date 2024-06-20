@@ -99,18 +99,16 @@
             font-weight: bold;
             color: #007bff;
         }
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-left: 5px;
+        .status-text {
+            font-size: 14px;
+            margin-left: 10px;
+            color: #333;
         }
-        .status-dot.online {
-            background-color: #28a745;
+        .status-text.online {
+            color: #28a745;
         }
-        .status-dot.offline {
-            background-color: #dc3545;
+        .status-text.offline {
+            color: #dc3545;
         }
     </style>
 </head>
@@ -146,8 +144,9 @@
                             {% endif %}
                         </div>
                         <div class="user-name">{{ user.username }}</div>
-                        <span class="status-dot {% if contact_user.is_online %}online{% else %}offline{% endif %}"></span>
-
+                        <span class="status-text {% if user.is_online %}online{% else %}offline{% endif %}">
+                            {% if user.is_online %}Online{% else %}Offline{% endif %}
+                        </span>
                     </a>
                 </li>
             {% endif %}
