@@ -219,10 +219,6 @@
             height: 100%;
             object-fit: cover;
         }
-        .user-name {
-            font-size: 18px;
-            color: #333;
-        }
         .message-item img {
             max-width: 150px; /* Adjust the size as needed */
             max-height: 150px; /* Adjust the size as needed */
@@ -231,10 +227,17 @@
         }
         .message-item video,
         .message-item audio {
-            max-width: 450px; /* Adjusted maximum width */
-            max-height: 450px; /* Adjusted maximum height */
+            max-width: 100%; /* Adjusted maximum width */
+            border-radius: 15px; /* Rounded corners */
             margin-top: 20px; /* Optional: To add space between the text and media */
-            border-radius: 15px; /* Optional: To make the image corners rounded
+            outline: none; /* Remove default focus outline */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow effect */
+        }
+        hr {
+            border: none; /* Remove default border */
+            height: 1px; /* Adjust height as needed */
+            background-color: #000; /* Black color */
+            margin: 20px 0; /* Adjust margin spacing */
         }
     </style>
 </head>
@@ -250,11 +253,23 @@
                     <img src="/media/media/images/trol.jpeg" alt="{{ contact_user.username }}">
                 {% endif %}
             </div>
+
             <div class="user-name">{{ contact_user.username }}</div>
             <span class="status-text {% if contact_user.is_online %}online{% else %}offline{% endif %}">
                 {% if contact_user.is_online %}Online{% else %}Offline{% endif %}
             </span>
         </a>
+
+        {% if contact_user.video %}
+            <h3>Stories</h3>
+            <video width="900" height="200" controls style="border-radius: 20px;">
+                <source src="{{ contact_user.video.url }}" type="video/mp4">
+            </video>
+        {% else %}
+            <h3>No Stories</h3>
+        {% endif %}
+
+        <hr/>
 
         <h3>Sent Messages</h3>
         <ul class="message-list">
@@ -265,10 +280,10 @@
                         <img src="{{ message.image.url }}" alt="Message Image">
                     {% endif %}
                     {% if message.video %}
-                        <video controls>
-                            <source src="{{ message.video.url }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <video controls style="max-width: 100%; max-height: 200px; border-radius: 15px; margin-top: 10px; outline: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                        <source src="{{ message.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     {% endif %}
                     {% if message.audio %}
                         <audio controls>
@@ -291,10 +306,10 @@
                         <img src="{{ message.image.url }}" alt="Message Image">
                     {% endif %}
                     {% if message.video %}
-                        <video controls>
-                            <source src="{{ message.video.url }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                       <video controls style="max-width: 120%; max-height: 200px; border-radius: 15px; margin-top: 10px; outline: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                        <source src="{{ message.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     {% endif %}
                     {% if message.audio %}
                         <audio controls>

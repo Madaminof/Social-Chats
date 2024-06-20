@@ -10,7 +10,8 @@ from django.db import models
 
 class User(AbstractUser):
     image = models.ImageField(upload_to='media/images/', blank=True, null=True)
-    video = models.FileField(upload_to='videos/', null=True, blank=True)
+    video = models.FileField(upload_to='media/videos/', blank=True, null=True)
+
 
     is_online = models.BooleanField(default=False)
 
@@ -30,8 +31,6 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
-
-
 
 
 

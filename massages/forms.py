@@ -5,3 +5,4 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Messages
         fields = ['content','image','video']
+

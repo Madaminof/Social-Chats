@@ -75,6 +75,7 @@
     <div class="profile-container">
         <h1>Profile</h1>
 
+
         <div class="profile-details">
             {% if user.image %}
                 <img src="{{ user.image.url }}" alt="" class="profile-image">
@@ -87,6 +88,8 @@
                         Your browser does not support the video tag.
                     </video>
             {% endif %}
+
+
             <p><strong>Username:</strong> {{ user.username }}</p>
             <p><strong>First Name:</strong> {{ user.first_name }}</p>
             <p><strong>Last Name:</strong> {{ user.last_name }}</p>
@@ -98,7 +101,9 @@
                 <a href="{% url 'user:logout' %}" class="back-button">Logout</a>
 
             </div>
+
         </div>
+
     </div>
 </body>
 </html>

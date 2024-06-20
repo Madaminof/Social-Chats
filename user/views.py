@@ -1,15 +1,19 @@
 from django.contrib.auth import logout, login
 from django.shortcuts import render, redirect
 from django.views import View
-from user.forms import UserForm,ProfileUpdateForm
-from user.models import User
+from user.forms import UserForm, ProfileUpdateForm
 from django.contrib.auth.forms import AuthenticationForm
+
+from user.models import User
+
 
 # Create your views here.
 class ProfileView(View):
     def get(self, request):
         user = request.user
-        return render(request, 'profile.html', context={'user': user})
+        videos = User.objects.all()
+        return render(request, 'profile.html', context={'user': user, 'videos': videos})
+
 
 
 class ProfileUpdateView(View):
@@ -24,6 +28,8 @@ class ProfileUpdateView(View):
             return redirect('user:profile')
         else:
             return render(request, 'profile_update.html', context={'u': u})
+
+
 
 class RegisterView(View):
     def get(self, request):
