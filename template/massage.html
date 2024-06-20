@@ -80,23 +80,37 @@
             display: flex;
             flex-direction: column;
             margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        .message-form label {
+            font-weight: bold;
+            margin-top: 10px;
         }
         .message-form input[type="text"],
-        .message-form input[type="submit"] {
+        .message-form textarea {
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
             margin: 5px 0;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
         }
         .message-form input[type="submit"] {
-            background-color: #28a745;
+            padding: 10px 20px;
+            background-color: #007bff;
             color: #fff;
             cursor: pointer;
             border: none;
+            border-radius: 5px;
             transition: background-color 0.3s;
+            font-size: 16px;
+            align-self: flex-end;
+            margin-top: 10px;
         }
         .message-form input[type="submit"]:hover {
-            background-color: #218838;
+            background-color: #0056b3;
         }
         .user-item {
             justify-content: center;
@@ -113,6 +127,7 @@
         }
         .user-item:hover {
             background-color: #e6f7ff;
+            transform: translateY(-2px); /* Move the element up slightly on hover */
         }
         .user-image {
             width: 40px;
@@ -214,6 +229,13 @@
             border-radius: 5px; /* Optional: To make the image corners rounded */
             margin-top: 10px; /* Optional: To add space between the text and image */
         }
+        .message-item video,
+        .message-item audio {
+            max-width: 450px; /* Adjusted maximum width */
+            max-height: 450px; /* Adjusted maximum height */
+            margin-top: 20px; /* Optional: To add space between the text and media */
+            border-radius: 15px; /* Optional: To make the image corners rounded
+        }
     </style>
 </head>
 <body>
@@ -222,7 +244,6 @@
 
         <a class="user-item" href="{% url 'conversation:message-with-user' contact_user.id %}">
             <div class="user-image">
-
                 {% if contact_user.image %}
                     <img src="{{ contact_user.image.url }}" alt="{{ contact_user.username }}">
                 {% else %}
@@ -230,7 +251,6 @@
                 {% endif %}
             </div>
             <div class="user-name">{{ contact_user.username }}</div>
-
             <span class="status-text {% if contact_user.is_online %}online{% else %}offline{% endif %}">
                 {% if contact_user.is_online %}Online{% else %}Offline{% endif %}
             </span>
@@ -244,7 +264,19 @@
                     {% if message.image %}
                         <img src="{{ message.image.url }}" alt="Message Image">
                     {% endif %}
-                    <span class="message-time">{{ message.sent_time }} To {{ message.receiver.username }}</span>
+                    {% if message.video %}
+                        <video controls>
+                            <source src="{{ message.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endif %}
+                    {% if message.audio %}
+                        <audio controls>
+                            <source src="{{ message.audio.url }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    {% endif %}
+                    <span class="message-time">{{ message.sent_time }} </span>
                 </li>
             {% empty %}
                 <p>No sent messages.</p>
@@ -258,7 +290,19 @@
                     {% if message.image %}
                         <img src="{{ message.image.url }}" alt="Message Image">
                     {% endif %}
-                    <span class="message-time">{{ message.sent_time }} From {{ message.sender.username }}</span>
+                    {% if message.video %}
+                        <video controls>
+                            <source src="{{ message.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endif %}
+                    {% if message.audio %}
+                        <audio controls>
+                            <source src="{{ message.audio.url }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    {% endif %}
+                    <span class="message-time">{{ message.sent_time }} </span>
                 </li>
             {% empty %}
                 <p>No received messages.</p>

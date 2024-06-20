@@ -4,4 +4,4 @@ from .models import Messages
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Messages
-        fields = ['content','image']
+        fields = ['content','image','video']
